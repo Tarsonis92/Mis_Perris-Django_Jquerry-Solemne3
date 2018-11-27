@@ -1,0 +1,218 @@
+{% extends 'maqueta.html' %}
+{% load staticfiles %}
+
+{% block principal %}
+
+{% for result in results %}
+
+{% endfor %}
+
+<link rel="stylesheet" href="{% static 'css/formularioPerros.css' %}">
+<script src="{% static 'js/agregarPerro.js' %}"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
+<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
+<script>
+    $(document).ready(function(){
+        $('.autocomplete').devbridgeAutocomplete({ 
+            source: function(req,add){
+                var cod = $("#codigo").val();
+                $.ajax({
+                    url:'formularioPerros',
+                    async:false,
+                    dataType:'json',
+                    type:'POST',
+                    data:{
+                        'start':cod,
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },error:function(err){
+                        alert("error");
+                    }
+                    
+                });
+            }
+        });
+
+         });
+        
+
+    $(document).ready(function(){
+        
+        $('.autocomplete').devbridgeAutocomplete({ 
+
+             source: function(req,add){
+                var image = $("#imagen").val();
+                $.ajax({
+                    url:'formularioPerros',
+                    async:false,
+                    dataType:'json',
+                    type:'POST',
+                    data:{
+                        'start':image,
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },error:function(err){
+                        alert("error");
+                    }
+                    
+                });
+            }
+
+         });
+
+    });
+
+    $(document).ready(function(){
+        
+        $('.autocomplete').devbridgeAutocomplete({ 
+            source: function(req,add){
+                var nom = $("#nombre").val();
+                $.ajax({
+                    url:'formularioPerros',
+                    async:false,
+                    dataType:'json',
+                    type:'POST',
+                    data:{
+                        'start':nom,
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },error:function(err){
+                        alert("error");
+                    }
+                    
+                });
+            }
+      
+         });
+        
+    });
+
+    $(document).ready(function(){
+       
+        $('.autocomplete').devbridgeAutocomplete({ 
+
+             source: function(req,add){
+                var edad = $("#edad").val();
+                $.ajax({
+                    url:'formularioPerros',
+                    async:false,
+                    dataType:'json',
+                    type:'POST',
+                    data:{
+                        'start':edad,
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },error:function(err){
+                        alert("error");
+                    }
+                    
+                });
+            }
+
+         });
+    
+    });
+
+    $(document).ready(function(){
+      
+        $('.autocomplete').devbridgeAutocomplete({ 
+
+             source: function(req,add){
+                var menu = $("#menuDesplegable").val();
+                $.ajax({
+                    url:'formularioPerros',
+                    async:false,
+                    dataType:'json',
+                    type:'POST',
+                    data:{
+                        'start':menu,
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },error:function(err){
+                        alert("error");
+                    }
+                    
+                });
+            }
+
+         });
+
+    });
+
+    $(document).ready(function(){
+      
+        $('.autocomplete').devbridgeAutocomplete({ 
+
+            
+            source: function(req,add){
+                var desc = $("#descripcion").val();
+                $.ajax({
+                    url:'formularioPerros',
+                    async:false,
+                    dataType:'json',
+                    type:'POST',
+                    data:{
+                        'start':desc,
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },error:function(err){
+                        alert("error");
+                    }
+                    
+                });
+            }
+       
+         });
+      
+    });
+
+</script>
+
+<form id="registration_form" action="#" method="POST"> 
+  {% csrf_token %}
+  <h1>Agregar Mascota</h1>
+            <div class="codigo">codigo de Mascota :{{result.codigoMascota}}<input id="codigo" type="Nombre" class="form_text" required></div>
+            <br>
+            <div class="image">Imagen:{{result.imagen}}<input id="imagen" type="file" class="file" name="pic" accept="image/*" required>
+            <span class="error" id="errorimagen"></span></div>
+            <br>
+            <div class="nombre">Nombre de la Mascota : <input id="nombre" type="text" class ="" name="nombre" required></div>
+            <br>
+            <div class="edad">Edad de la Mascota : <input id="edad" type="text" class ="" name="nombre" required></div>
+            <br>
+            <div class="raza">Raza de la Mascota :{{result.razaMascota}}
+                <select id="menuDesplegable" required>
+                    <option value="op1" selected=”selected”>Ninguno</option> 
+                   <option value=”op2″ selected=”selected”>Pastor Aleman</option>
+                   <option value=”op3″ selected=”selected”>Pastor Ingles</option>
+                   <option value=”op4″ selected=”selected”>Pastor Afgano</option>
+                   <option value=”op5″ selected=”selected”>Rottweiler</option>
+                   <option value=”op6″ selected=”selected”>Pitbull</option>
+                   <option value=”op7″ selected=”selected”>Labrador</option>
+                   <option value=”op8″ selected=”selected”>BullDog Ingles</option>
+                   <option value=”op9″ selected=”selected”>BullDog</option>
+                   <option value=”op10″ selected=”selected”>Dobberman</option>
+                    <option value=”op11″ selected=”selected”>Akita</option>
+             </select>
+            </div>
+            <br>
+            <div class="descripcion">Descripcion :{{result.descripcion}}<textarea id="descripcion" rows="4" cols="50" required></textarea>></div> </div>
+            <br>
+            <div class="boton"><button id="btn_guardar" onclick="guardar();" >guardar</button>></div>
+</form>
+
+<table >
+  <thead>
+      <tr>
+          <th>CodigoMascota</th>
+          <th>Imagen</th>
+          <th>Nombre</th>
+          <th>Edad</th>
+          <th>Raza</th>
+          <th>Descripcion</th>
+      </tr>
+  </thead>
+  <tbody id="tablita">
+
+  </tbody>
+</table>
+
+
+
+{% endblock %}
